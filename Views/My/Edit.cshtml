@@ -1,0 +1,17 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "Редакция на студент";
+}
+
+<div>@TempData["message"]</div>
+<div>
+    <form method="post">
+        <partial name="_StudentForm" />
+    </form>
+</div>
+
+@foreach (var s in Model.notes)
+{
+
+    @s.score;
+}

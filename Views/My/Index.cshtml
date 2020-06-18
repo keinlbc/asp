@@ -1,0 +1,39 @@
+﻿
+@model List<Student>
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        <a asp-controller="My" asp-action="New">Създаване на нов запис</a>
+    </p>
+
+    <h1>List of Customers</h1>
+
+    <table border="1" cellpadding="11">
+        @foreach (var student in Model)
+        {
+        <tr>
+
+        </tr>
+        <tr>
+            <td>@student.Id</td>
+            <td>@student.firstname</td>
+            <td>@student.lastname</td>
+            <td>@student.fn</td>
+            <td>@student.speciality</td>
+            <td>@student.course.</td>
+        </tr>
+        }
+    </table>
+</body>
+</html>
