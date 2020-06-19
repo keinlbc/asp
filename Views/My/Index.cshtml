@@ -17,22 +17,34 @@
         <a asp-controller="My" asp-action="New">Създаване на нов запис</a>
     </p>
 
-    <h1>List of Customers</h1>
+    <h1>List of Students</h1>
 
     <table border="1" cellpadding="11">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>faculty number</th>
+            <th>Speciality</th>
+            <th>Course</th>
+            <th>Actions</th>
+        </tr>   
         @foreach (var student in Model)
         {
-        <tr>
 
-        </tr>
-        <tr>
-            <td>@student.Id</td>
-            <td>@student.firstname</td>
-            <td>@student.lastname</td>
-            <td>@student.fn</td>
-            <td>@student.speciality</td>
-            <td>@student.course.</td>
-        </tr>
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.firstname</td>
+                <td>@student.lastname</td>
+                <td>@student.fn</td>
+                <td>@student.speciality</td>
+                <td>@student.course.</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@student.Id">Edit</a> |
+                    <a asp-action="ShowXml" asp-route-id="@student.Id">Serialized</a> |
+                    <a asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                </td>
+            </tr>
         }
     </table>
 </body>

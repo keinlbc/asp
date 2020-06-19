@@ -31,7 +31,9 @@ namespace aspcourse.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var students = _context.Students.Include(s => s.notes).ToList();
+            var students = _context.Students
+                .Include(s => s.notes)
+                .ToList();
             
             return View(students);
         }
@@ -45,6 +47,7 @@ namespace aspcourse.Controllers
         [HttpGet]
         public IActionResult New()
         {
+
             return View();
         }
 
@@ -67,12 +70,33 @@ namespace aspcourse.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Student student)
+        public IActionResult Edit(int id, Student student,ICollection<Note> notes)
         {
-            _context.Update(student);
-            _context.SaveChanges();
-            TempData["message"] = "success" ;
+
+            if (ModelState.IsValid)
+            {
+                student.notes = notes;
+                _context.Update(student);
+
+
+                _context.SaveChanges();
+                TempData["message"] = "success";
+            }
+            else
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var m in allErrors)
+                    TempData["message"] = m.ErrorMessage;
+            }
             return RedirectToAction("Edit", new { id = student.Id });
+        }
+        
+        public IActionResult Delete(int id, Student student)
+        {
+            _context.Remove(student);
+            _context.SaveChanges();
+            TempData["message"] = "success";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -104,6 +128,18 @@ namespace aspcourse.Controllers
             if (ModelState.IsValid) {
                 Student s = new Student();
                 s = student;
+                if(_context.Students.Any(old=>old.Id == s.Id))
+                {
+                    _context.Update(s);
+                }
+                else
+                {
+                    _context.Add(s);
+                }
+                
+
+
+                _context.SaveChanges();
                 return Ok(s);
 
             }

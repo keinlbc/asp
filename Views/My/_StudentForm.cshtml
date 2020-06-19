@@ -1,15 +1,42 @@
 ﻿@model Student
-
 <label>Име:</label>
 <input asp-for="firstname">
 <br>
 <label>Фамилия:</label>
 <input asp-for="lastname">
 <br>
-<label>Fa:</label>
+<label>Фак. номер:</label>
 <input asp-for="fn">
+<br>
+<label>Емайл:</label>
+<input asp-for="email">
+<br><label>Държава:</label>
+<input asp-for="country">
+<br><label>Град:</label>
+<input asp-for="city">
+<br><label>Специалност:</label>
+<input asp-for="speciality">
+<br>
+<label>Курс:</label>
+<input asp-for="course">
 <br>
 <label>Рождена дата:</label>
 <input asp-for="birthday">
 <br>
+<hr />
+@if( (Model is object))
+@for (int i = 0; i < Model.notes.Count; i++)
+{
+<div class="form-group">
+   
+    <input type="hidden" asp-for="notes.ToList()[i].NoteId">
+    <label>Дисциплина</label>
+    <input asp-for="notes.ToList()[i].course">
+    <label>Оценка</label>
+    <input asp-for="notes.ToList()[i].score">
+
+
+</div>
+    <br>
+}
 <input type="submit" name="submit" value="Запиши">
